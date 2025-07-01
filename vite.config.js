@@ -1,10 +1,8 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react' // if you're using React
-import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from "vite";
+import tailwindcss from "@tailwindcss/vite";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
-  plugins: [
-    react(),          // optional: only if needed
-    tailwindcss(),    // ⚡ adds Tailwind as a Vite plugin
-  ],
-})
+  plugins: [tailwindcss(), react()],
+  
+});
