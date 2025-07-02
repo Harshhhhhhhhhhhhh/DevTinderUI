@@ -1,22 +1,25 @@
+import { useSelector } from "react-redux";
 
 const NavBar = ()=>{
+  const user = useSelector((store)=>store.user)
     return(
             <div className="navbar bg-base-500 shadow-sm">
                 {/* Left side */}
                 <div className="navbar-start">
-                  <a className="btn btn-ghost text-xl">daisyUI</a>
+                  <a className="btn btn-ghost text-xl">🧑‍💻DevTinder</a>
                 </div>
 
                 {/* Right side */}
                 <div className="navbar-end flex gap-2">
-                  <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
+                  {user && (<p>Welcome , {user.firstName}</p>)}
                   <div className="dropdown dropdown-end">
-                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                      <div className="w-10 rounded-full">
+                    
+                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar ">
+                      {user &&(<div className="w-10 rounded-full ">
                         <img
                           alt="Tailwind CSS Navbar component"
-                          src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-                      </div>
+                          src={user.photoUrl} />
+                      </div>)}
                     </div>
                     <ul
                       tabIndex={0}
