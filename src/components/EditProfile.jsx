@@ -17,6 +17,7 @@ const EditProfile = ({ user }) => {
   const [gender, setGender] = useState(user.gender || "");
   const [about, setAbout] = useState(user.about || "");
   const [error, setError] = useState("");
+  const [showToast,setToast]=useState(false);
 
   const saveProfile = async () => {
     try {
@@ -34,78 +35,91 @@ const EditProfile = ({ user }) => {
       );
 
       dispatch(addUser(res.data.data));
+      setToast(true);
+      setTimeout(()=>{
+        setToast(false);
+      },3000)
+
     } catch (err) {
       setError(err?.response?.data || "Something went wrong");
     }
   };
 
   return (
-    <div className="min-h-screen bg-base-200 flex flex-col md:flex-row justify-center items-center gap-6 p-6">
-      {/* Edit Profile Card */}
-      <div className="card w-full max-w-sm bg-primary text-primary-content shadow-xl">
-        <div className="card-body p-6">
-          <h2 className="card-title text-2xl">Edit Profile</h2>
-          <div className="w-full max-w-xs">
-            <input
-              type="text"
-              placeholder="Enter your First name"
-              className="input input-bordered w-full mb-4 text-base text-black placeholder:text-gray-400 bg-white"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
+    <>
+      <div className="min-h-screen bg-base-200 flex flex-col md:flex-row justify-center items-center gap-6 p-6">
+        {/* Edit Profile Card */}
+        <div className="card w-full max-w-sm bg-primary text-primary-content shadow-xl">
+          <div className="card-body p-6">
+            <h2 className="card-title text-2xl">Edit Profile</h2>
+            <div className="w-full max-w-xs">
+              <input
+                type="text"
+                placeholder="Enter your First name"
+                className="input input-bordered w-full mb-4 text-base text-black placeholder:text-gray-400 bg-white"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
 
-            <input
-              type="text"
-              placeholder="Enter your Last name"
-              className="input input-bordered w-full mb-4 text-base text-black placeholder:text-gray-400 bg-white"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
+              <input
+                type="text"
+                placeholder="Enter your Last name"
+                className="input input-bordered w-full mb-4 text-base text-black placeholder:text-gray-400 bg-white"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
 
-            <input
-              type="text"
-              placeholder="Enter your age"
-              className="input input-bordered w-full mb-4 text-base text-black placeholder:text-gray-400 bg-white"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
-            />
+              <input
+                type="text"
+                placeholder="Enter your age"
+                className="input input-bordered w-full mb-4 text-base text-black placeholder:text-gray-400 bg-white"
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+              />
 
-            <input
-              type="text"
-              placeholder="Enter your gender"
-              className="input input-bordered w-full mb-4 text-base text-black placeholder:text-gray-400 bg-white"
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
-            />
+              <input
+                type="text"
+                placeholder="Enter your gender"
+                className="input input-bordered w-full mb-4 text-base text-black placeholder:text-gray-400 bg-white"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+              />
 
-            <textarea
-              placeholder="Enter about yourself"
-              className="textarea textarea-bordered w-full mb-4 text-base text-black placeholder:text-gray-400 bg-white"
-              value={about}
-              onChange={(e) => setAbout(e.target.value)}
-            ></textarea>
+              <textarea
+                placeholder="Enter about yourself"
+                className="textarea textarea-bordered w-full mb-4 text-base text-black placeholder:text-gray-400 bg-white"
+                value={about}
+                onChange={(e) => setAbout(e.target.value)}
+              ></textarea>
 
-            <input
-              type="text"
-              placeholder="Enter your photoUrl"
-              className="input input-bordered w-full mb-4 text-base text-black placeholder:text-gray-400 bg-white"
-              value={photoUrl}
-              onChange={(e) => setPhotoUrl(e.target.value)}
-            />
-          </div>
+              <input
+                type="text"
+                placeholder="Enter your photoUrl"
+                className="input input-bordered w-full mb-4 text-base text-black placeholder:text-gray-400 bg-white"
+                value={photoUrl}
+                onChange={(e) => setPhotoUrl(e.target.value)}
+              />
+            </div>
 
-          <div className="card-actions justify-end mt-4">
-            <button 
-            className="btn btn-secondary w-full"
-            onClick={saveProfile}>
-            Submit</button>
+            <div className="card-actions justify-end mt-4">
+              <button
+                className="btn btn-secondary w-full"
+                onClick={saveProfile}>
+                Submit</button>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* FeedCard beside EditProfile */}
-      <FeedCard user={{ firstName, lastName, photoUrl, age, gender, about }} />
-    </div>
+        {/* FeedCard beside EditProfile */}
+        <FeedCard user={{ firstName, lastName, photoUrl, age, gender, about }} />
+      </div>
+      {showToast&&(<div className="toast toast-top toast-center">
+        <div className="alert alert-info">
+          <span>Profile updated successfully.</span>
+        </div>
+        
+      </div>)}
+    </>
   );
 };
 
