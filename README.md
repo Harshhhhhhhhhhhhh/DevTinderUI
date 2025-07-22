@@ -21,7 +21,7 @@
     
     2. Set secure permissions
         chmod 400 KeyPair.pem
-    b   This ensures only you can read the file, which is required by SSH.
+        This ensures only you can read the file, which is required by SSH.
     
         --> WSL doesn’t fully respect chmod on files inside /mnt/c/... (your Windows filesystem). Even though you did chmod 400, WSL can't enforce permissions on files stored in Windows drives like C:, which AWS SSH cares about strictly.
             --->✅ Fix: Move the .pem file into WSL's native Linux filesystem
@@ -35,8 +35,8 @@
                         chmod 400 KeyPair.pem
     
     3. SSH into your EC2 instance
-    Now run the following command (replace username if needed):
-    ssh -i "KeyPair.pem" ubuntu@ec2-13-233-56-165.ap-south-1.compute.amazonaws.com
+       Now run the following command (replace username if needed):
+        ssh -i "KeyPair.pem" ubuntu@ec2-13-233-56-165.ap-south-1.compute.amazonaws.com
 
 - Install node version -->24.3.0
 
@@ -46,6 +46,14 @@
 - npm install
 - npm run build
 
-- sudo apt update
-- sudo apt install nginx
-- sudo systemctl start nginx
+- INSTALL and Run NGINX
+    -> sudo apt update
+    -> sudo apt install nginx
+    -> sudo systemctl start nginx
+    -> sudo systemctl enable nginx
+- copy dist folder to nginx http server  i.e. /var/www/html 
+    -> sudo scp -r dist/* /var/www/html
+
+- Enable port 80 on our instance  
+
+- IT is live on http://ec2-13-233-56-165.ap-south-1.compute.amazonaws.com/ but wont run on 13-233-56-165
