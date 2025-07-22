@@ -1,12 +1,51 @@
-# React + Vite
+# FrontEnd Deployment 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- SignUp to aws
+- launch instance by creating .pem files for keys
 
-Currently, two official plugins are available:
+- for wsl UBANTU
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+    * IF running Ubuntu in WSL (Windows Subsystem for Linux) or in a VM
+    
+    Ubuntu terminal runs separately in a Linux filesystem, and by default, the Linux root user doesn’t have a "Downloads" folder unless you create it manually.
+    
+    So Ubuntu's /root/Downloads ≠ Windows Downloads.
+    
+    1. Go to the location of your .pem file
+    cd /mnt/c/Users/mewbee/Downloads
+    
+    
+    Confirm it's there:
+        ls KeyPair.pem
+    
+    
+    2. Set secure permissions
+        chmod 400 KeyPair.pem
+    b   This ensures only you can read the file, which is required by SSH.
+    
+        --> WSL doesn’t fully respect chmod on files inside /mnt/c/... (your Windows filesystem). Even though you did chmod 400, WSL can't enforce permissions on files stored in Windows drives like C:, which AWS SSH cares about strictly.
+            --->✅ Fix: Move the .pem file into WSL's native Linux filesystem
+                    ----> Create a secure folder inside WSL--->mkdir -p ~/.ssh
+    
+                    ---->Copy the key file from Windows to WSL:->
+                        cp /mnt/c/Users/mewbee/Downloads/KeyPair.pem ~/.ssh/
+    
+                    ---->move to .ssh and apply permissions:->
+                        cd ~/.ssh
+                        chmod 400 KeyPair.pem
+    
+    3. SSH into your EC2 instance
+    Now run the following command (replace username if needed):
+    ssh -i "KeyPair.pem" ubuntu@ec2-13-233-56-165.ap-south-1.compute.amazonaws.com
 
-## Expanding the ESLint configuration
+- Install node version -->24.3.0
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- git clone DevTinderUI
+
+- cd DevTInderUI
+- npm install
+- npm run build
+
+- sudo apt update
+- sudo apt install nginx
+- sudo systemctl start nginx
